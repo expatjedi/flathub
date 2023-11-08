@@ -1,0 +1,65 @@
+{
+  "id": "org.goldcoin.goldcoin-core",
+  "runtime": "org.freedesktop.Platform",
+  "sdk": "org.freedesktop.Sdk",
+  "runtime-version": "22.08",
+  "command": "goldcoin-qt",
+  "finish-args": [
+    "--socket=x11",
+    "--socket=pulseaudio",
+    "--device=dri",
+    "--share=ipc",
+    "--share=network"
+  ],
+  "modules": [
+    {
+      "name": "goldcoin",
+      "buildsystem": "simple",
+      "build-commands": [
+        "install -m 0744 -D -t /app/bin/internal bin/goldcoin-qt",
+        "install -m 0744 -D -t /app/bin/internal bin/goldcoind",
+        "install -m 0744 -D -t /app/bin/internal bin/goldcoin-cli",
+        "install -m 0744 -D -t /app/bin/internal bin/goldcoin-tx"
+      ],
+      "sources": [
+        {
+          "type": "archive",
+          "only-arches": ["x86_64"],
+          "url": "https://github.com/expatjedi/glc-flatpak-data/releases/download/0.15.0/goldcoin-core-0.15.0-x86_64-linux-gnu.tar.gz",
+          "sha256": "16fb341c8462cbefa04e6594a39a974eef1ce6f8e0e5df0ae1b8cf1210e32ddf"
+        }
+      ]
+    },
+    {
+      "name": "misc",
+      "buildsystem": "simple",
+      "build-commands": [
+        "install -Dp -m 644 goldcoin.svg /app/share/icons/hicolor/scalable/apps/org.goldcoin.goldcoin-core.svg",
+        "install -Dp -m 644 goldcoin-qt.desktop /app/share/applications/org.goldcoin.goldcoin-core.desktop",
+        "desktop-file-edit --set-icon=${FLATPAK_ID} /app/share/applications/org.goldcoin.goldcoin-core.desktop",
+        "install -Dp -m 644 org.goldcoin.goldcoin-core.metainfo.xml /app/share/metainfo/org.goldcoin.goldcoin-core.metainfo.xml",
+        "bash install_wrapper.sh"
+      ],
+      "sources": [
+        {
+          "type": "file",
+          "url": "https://raw.githubusercontent.com/expatjedi/glc-flatpak-data/main/goldcoin-qt.desktop",
+          "sha256": "c79cc0f16a935315ac942a2373f8610961031b99963482db9558ca6dee33bd6e"
+        },
+        {
+          "type": "file",
+          "path": "org.goldcoin.goldcoin-core.metainfo.xml"
+        },
+        {
+          "type": "file",
+          "url": "https://raw.githubusercontent.com/expatjedi/glc-flatpak-data/main/goldcoin.svg",
+          "sha256": "980cb9e2bedf169c64fd4e019fef78be7f76685366711876440c3ec10d9f97dd"
+        },
+        {
+          "type": "file",
+          "path": "install_wrapper.sh"
+        }
+      ]
+    }
+  ]
+}

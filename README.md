@@ -1,0 +1,1 @@
+## Goldcoin Core Official Flatpak Files
